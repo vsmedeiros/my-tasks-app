@@ -4,15 +4,14 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,34 +24,50 @@ import com.example.mytasks.ui.components.TodoItem
 import com.example.mytasks.ui.theme.MyTasksTheme
 
 @Composable
-fun ListScreen() {
-
+fun ListScreen(
+    navigateToAddEditScreen: (id: Long?) -> Unit,
+) {
+    ListContent(
+        todos = emptyList(),
+        onAddItemClick = {
+            navigateToAddEditScreen(null)
+        }
+    )
 }
+
 
 @Composable
 fun ListContent(
-    todos: List<Todo>
+    todos: List<Todo>,
+    onAddItemClick: () -> Unit,
 ) {
-    Scaffold(floatingActionButton = {
-        FloatingActionButton(onClick = { }) {
-            Icon(Icons.Default.Add, contentDescription = "Add")
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    onAddItemClick()
+                }
+            ) {
+                Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
+            }
         }
-    }
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
-                .consumeWindowInsets(paddingValues),
-            contentPadding = PaddingValues(16.dp),
+                .consumeWindowInsets(paddingValues)
+                .padding(paddingValues), // ✅ Aplicando o padding corretamente
+            contentPadding = PaddingValues(16.dp) // ✅ Correção do erro
         ) {
-            itemsIndexed(todos) { index, todo ->
+            itemsIndexed(todos) {
+                index, it ->
                 TodoItem(
-                    todo = todo,
+                    todo = it,
                     onCompletedChange = {},
-                    onItemClick = {},
-                    onDeleteClick = {}
+                    onItemClicked = {},
+                    onDeleteClicked = {}
                 )
                 if (index < todos.lastIndex) {
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
             }
         }
@@ -67,8 +82,9 @@ private fun ListContentPreview() {
             todos = listOf(
                 todo1,
                 todo2,
-                todo3
-            )
+                todo3,
+            ),
+            onAddItemClick = {},
         )
     }
 }
