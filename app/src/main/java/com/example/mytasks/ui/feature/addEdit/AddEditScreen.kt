@@ -1,4 +1,4 @@
-package com.example.mytasks.ui.feature
+package com.example.mytasks.ui.feature.addEdit
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons

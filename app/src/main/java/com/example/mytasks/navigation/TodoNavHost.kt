@@ -5,7 +5,7 @@ import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.mytasks.ui.feature.AddEditScreen
+import com.example.mytasks.ui.feature.addEdit.AddEditScreen
 import com.example.mytasks.ui.feature.ListScreen
 import kotlinx.serialization.Serializable
 
