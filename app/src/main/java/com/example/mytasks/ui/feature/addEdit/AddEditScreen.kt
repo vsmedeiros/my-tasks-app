@@ -19,6 +19,7 @@ import com.example.mytasks.ui.theme.MyTasksTheme
 
 @Composable
 fun AddEditScreen(
+    id: Long?,
     navigateBack : () -> Unit,
 
 ) {
@@ -28,7 +29,9 @@ fun AddEditScreen(
         dao = database.dao
     )
     val viewModel = viewModel<AddEditViewModel>{
-       AddEditViewModel(repository = repository)
+       AddEditViewModel(
+           id = id,
+           repository = repository)
 
     }
 
