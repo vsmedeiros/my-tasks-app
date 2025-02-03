@@ -40,12 +40,12 @@ fun AddEditScreen() {
 fun AddEditContent(
     title: String = "",
     description: String? = null,
-    onEvent: (addEditEvent) -> Unit,
+    onEvent: (AddEditEvent) -> Unit,
 ) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                onEvent(addEditEvent.Save)
+                onEvent(AddEditEvent.Save)
             }) {
                 Icon(Icons.Default.Check, contentDescription = "Salvo!")
             }
@@ -62,7 +62,7 @@ fun AddEditContent(
                 value = title,
                 onValueChange = {
                     onEvent(
-                        addEditEvent.TitleChanged(it))
+                        AddEditEvent.TitleChanged(it))
 
                 },
                 label = { Text("Título") }, // ✅ Mantém o texto visível mesmo ao digitar
@@ -76,7 +76,7 @@ fun AddEditContent(
                 value = description ?: "",
                 onValueChange = {
                     onEvent(
-                        addEditEvent.DescriptionChanged(it))
+                        AddEditEvent.DescriptionChanged(it))
 
                 },
                 label = { Text("Descrição (opcional)") },
