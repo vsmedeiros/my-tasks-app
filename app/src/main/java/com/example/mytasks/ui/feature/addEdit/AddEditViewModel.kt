@@ -51,6 +51,7 @@ class AddEditViewModel(
             }
 
             repository.insert(title,description)
+            _uiEvent.send(UiEvent.NavigateBack)
         }
     }
 }

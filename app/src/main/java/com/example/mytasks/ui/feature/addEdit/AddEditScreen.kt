@@ -5,6 +5,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -12,10 +14,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mytasks.data.TodoDatabaseProvider
 import com.example.mytasks.data.TodoRepositoryImpl
+import com.example.mytasks.ui.UiEvent
 import com.example.mytasks.ui.theme.MyTasksTheme
 
 @Composable
-fun AddEditScreen() {
+fun AddEditScreen(
+    navigateBack : () -> Unit,
+
+) {
     val context = LocalContext.current.applicationContext
     val database = TodoDatabaseProvider.provide(context)
     val repository = TodoRepositoryImpl(
@@ -29,9 +35,33 @@ fun AddEditScreen() {
     val title = viewModel.title
     val description = viewModel.description
 
+    val snackbarHostState = remember {
+        SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collect { uiEvent ->
+            when (uiEvent) {
+                is UiEvent.ShowSnackbar -> {
+                    snackbarHostState.showSnackbar(
+                        message = uiEvent.message
+                    )
+
+                }
+
+                is UiEvent.NavigateBack -> {
+                    navigateBack()
+                }
+
+                is UiEvent.Navigate<*> -> {
+                }
+            }
+        }
+    }
+
     AddEditContent(
         title = title,
         description = description,
+        snackbarHostState = snackbarHostState,
         onEvent = viewModel::onEvent
     )
 }
@@ -40,6 +70,7 @@ fun AddEditScreen() {
 fun AddEditContent(
     title: String = "",
     description: String? = null,
+    snackbarHostState: SnackbarHostState,
     onEvent: (AddEditEvent) -> Unit,
 ) {
     Scaffold(
@@ -49,7 +80,11 @@ fun AddEditContent(
             }) {
                 Icon(Icons.Default.Check, contentDescription = "Salvo!")
             }
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         }
+
     ) { paddingValues ->  // ✅ Corrigido para evitar `consumeWindowInsets(it)`
         Column(
             modifier = Modifier
@@ -93,6 +128,7 @@ fun AddEditContentPreview() {
         AddEditContent(
             title = "",
             description = null,
+            snackbarHostState = SnackbarHostState(),
             onEvent = {}
         )
     }
