@@ -9,4 +9,6 @@ data class TodoEntity(
     val title: String,
     val description: String?,
     val isCompleted: Boolean,
+    val startTime: String?,
+    val endTime: String?
 )

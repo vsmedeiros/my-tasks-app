@@ -40,6 +40,8 @@ fun AddEditScreen(
 
     val title = viewModel.title
     val description = viewModel.description
+    val startTime = viewModel.startTime
+    val endTime = viewModel.endTime
 
     val snackbarHostState = remember {
         SnackbarHostState()
@@ -68,6 +70,8 @@ fun AddEditScreen(
     AddEditContent(
         title = title,
         description = description,
+        startTime = startTime,
+        endTime = endTime,
         snackbarHostState = snackbarHostState,
         onEvent = viewModel::onEvent
     )
@@ -77,6 +81,8 @@ fun AddEditScreen(
 fun AddEditContent(
     title: String = "",
     description: String? = null,
+    startTime: String? = null,
+    endTime: String? = null,
     snackbarHostState: SnackbarHostState,
     onEvent: (AddEditEvent) -> Unit,
 ) {
@@ -130,6 +136,30 @@ fun AddEditContent(
                 label = { Text("Descrição (opcional)") },
                 placeholder = { Text("Digite a descrição") }
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                OutlinedTextField(
+                    modifier = Modifier.weight(1f),
+                    value = startTime ?: "",
+                    onValueChange = { onEvent(AddEditEvent.StartTimeChanged(it)) },
+                    label = { Text("Hora de início") },
+                    placeholder = { Text("HH:MM AM") }
+                )
+
+                OutlinedTextField(
+                    modifier = Modifier.weight(1f),
+                    value = endTime ?: "",
+                    onValueChange = { onEvent(AddEditEvent.EndTimeChanged(it)) },
+                    label = { Text("Hora de término") },
+                    placeholder = { Text("HH:MM PM") }
+                )
+            }
+
         }
     }
 }
@@ -141,6 +171,8 @@ fun AddEditContentPreview() {
         AddEditContent(
             title = "",
             description = null,
+            startTime = null,
+            endTime = null,
             snackbarHostState = SnackbarHostState(),
             onEvent = {}
         )

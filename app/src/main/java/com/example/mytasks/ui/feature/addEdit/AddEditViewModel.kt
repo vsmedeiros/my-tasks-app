@@ -23,6 +23,12 @@ class AddEditViewModel(
     var description by mutableStateOf<String?>(null)
         private set
 
+    var startTime by mutableStateOf<String?>(null)
+        private set
+
+    var endTime by mutableStateOf<String?>(null)
+        private set
+
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
@@ -32,6 +38,8 @@ class AddEditViewModel(
                 val todo = repository.getBy(it)
                 title = todo?.title ?: ""
                 description = todo?.description
+                startTime = todo?.startTime
+                endTime = todo?.endTime
             }
         }
     }
@@ -44,6 +52,14 @@ class AddEditViewModel(
 
             is AddEditEvent.DescriptionChanged -> {
                 description = event.description
+            }
+
+            is AddEditEvent.StartTimeChanged -> {
+                startTime = event.startTime
+            }
+
+            is AddEditEvent.EndTimeChanged -> {
+                endTime = event.endTime
             }
 
             is AddEditEvent.Save -> {
@@ -63,7 +79,7 @@ class AddEditViewModel(
                 return@launch
             }
 
-            repository.insert(title, description, id)
+            repository.insert(title, description, id, startTime, endTime)
             _uiEvent.send(UiEvent.NavigateBack)
         }
     }

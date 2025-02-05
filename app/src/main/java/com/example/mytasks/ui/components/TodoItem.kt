@@ -39,11 +39,13 @@ fun TodoItem(
         ) {
             Checkbox(
                 checked = todo.isCompleted,
-                onCheckedChange = onCompletedChange)
+                onCheckedChange = onCompletedChange
+            )
 
             Spacer(
                 modifier = Modifier
-                    .width(8.dp))
+                    .width(8.dp)
+            )
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
@@ -58,12 +60,21 @@ fun TodoItem(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
+
+                if (todo.startTime != null && todo.endTime != null) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "${todo.startTime} - ${todo.endTime}",
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.width(8.dp))
 
             IconButton(
-                onClick = onDeleteClicked) {
+                onClick = onDeleteClicked
+            ) {
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Delete"
@@ -85,7 +96,7 @@ private fun TodoItemPreview() {
     }
 }
 
-@Preview(showBackground = true,)
+@Preview(showBackground = true)
 @Composable
 private fun TodoItemPreviewCompleted() {
     MyTasksTheme {
