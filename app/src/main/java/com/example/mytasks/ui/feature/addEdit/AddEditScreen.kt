@@ -1,6 +1,7 @@
 package com.example.mytasks.ui.feature.addEdit
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.*
@@ -8,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,18 +22,19 @@ import com.example.mytasks.ui.theme.MyTasksTheme
 @Composable
 fun AddEditScreen(
     id: Long?,
-    navigateBack : () -> Unit,
+    navigateBack: () -> Unit,
 
-) {
+    ) {
     val context = LocalContext.current.applicationContext
     val database = TodoDatabaseProvider.provide(context)
     val repository = TodoRepositoryImpl(
         dao = database.dao
     )
-    val viewModel = viewModel<AddEditViewModel>{
-       AddEditViewModel(
-           id = id,
-           repository = repository)
+    val viewModel = viewModel<AddEditViewModel> {
+        AddEditViewModel(
+            id = id,
+            repository = repository
+        )
 
     }
 
@@ -39,7 +42,8 @@ fun AddEditScreen(
     val description = viewModel.description
 
     val snackbarHostState = remember {
-        SnackbarHostState() }
+        SnackbarHostState()
+    }
 
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collect { uiEvent ->
@@ -78,12 +82,16 @@ fun AddEditContent(
 ) {
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                onEvent(AddEditEvent.Save)
-            }) {
+            FloatingActionButton(shape = CircleShape,
+                containerColor = Color.Black,
+                contentColor = Color.White,
+                onClick = {
+                    onEvent(AddEditEvent.Save)
+                }) {
                 Icon(Icons.Default.Check, contentDescription = "Salvo!")
             }
         },
+        floatingActionButtonPosition = FabPosition.Center,
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         }
@@ -100,7 +108,8 @@ fun AddEditContent(
                 value = title,
                 onValueChange = {
                     onEvent(
-                        AddEditEvent.TitleChanged(it))
+                        AddEditEvent.TitleChanged(it)
+                    )
 
                 },
                 label = { Text("Título") }, // ✅ Mantém o texto visível mesmo ao digitar
@@ -114,7 +123,8 @@ fun AddEditContent(
                 value = description ?: "",
                 onValueChange = {
                     onEvent(
-                        AddEditEvent.DescriptionChanged(it))
+                        AddEditEvent.DescriptionChanged(it)
+                    )
 
                 },
                 label = { Text("Descrição (opcional)") },
