@@ -79,6 +79,24 @@ class AddEditViewModel(
                 return@launch
             }
 
+            if (startTime.isNullOrBlank()) {
+                _uiEvent.send(
+                    UiEvent.ShowSnackbar(
+                        message = "O horário de início não pode ficar vazio"
+                    )
+                )
+                return@launch
+            }
+
+            if (endTime.isNullOrBlank()) {
+                _uiEvent.send(
+                    UiEvent.ShowSnackbar(
+                        message = "O horário de término não pode ficar vazio"
+                    )
+                )
+                return@launch
+            }
+
             repository.insert(title, description, id, startTime, endTime)
             _uiEvent.send(UiEvent.NavigateBack)
         }

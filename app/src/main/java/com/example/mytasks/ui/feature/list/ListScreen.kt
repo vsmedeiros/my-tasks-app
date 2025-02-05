@@ -37,7 +37,7 @@ import com.example.mytasks.domain.todo2
 import com.example.mytasks.domain.todo3
 import com.example.mytasks.navigation.AddEditRoute
 import com.example.mytasks.ui.UiEvent
-import com.example.mytasks.ui.components.TodoItem
+import com.example.mytasks.ui.components.TaskComponent
 import com.example.mytasks.ui.theme.MyTasksTheme
 
 @Composable
@@ -132,7 +132,7 @@ fun ListContent(
             contentPadding = PaddingValues(16.dp) // ✅ Correção do erro
         ) {
             itemsIndexed(todos) { index, todo ->
-                TodoItem(
+                TaskComponent(
                     todo = todo,
                     onCompletedChange = {
                         onEvent(ListEvent.CompleteChanged(todo.id, it))
@@ -145,7 +145,7 @@ fun ListContent(
                     }
                 )
                 if (index < todos.lastIndex) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
         }
