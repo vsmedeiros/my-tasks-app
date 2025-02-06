@@ -56,8 +56,8 @@ fun TaskComponent(
                 text = "${todo.startTime}",
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center,
-
-                )
+                modifier = Modifier.width(54.dp)
+            )
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
@@ -79,8 +79,7 @@ fun TaskComponent(
                     Row(
                         modifier = Modifier
                             .clip(RoundedCornerShape(14.dp))
-                            .background(taskColor)
-                            .width(250.dp),
+                            .background(taskColor),
                         verticalAlignment = Alignment.CenterVertically
 
                     ) {
@@ -91,7 +90,8 @@ fun TaskComponent(
                         )
 
                         Column(
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier.width(150.dp)
                         ) {
                             Text(
                                 text = todo.title,
