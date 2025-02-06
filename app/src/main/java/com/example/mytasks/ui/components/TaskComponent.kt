@@ -57,7 +57,7 @@ fun TaskComponent(
                 style = MaterialTheme.typography.titleMedium,
                 textAlign = TextAlign.Center,
 
-            )
+                )
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
@@ -79,8 +79,10 @@ fun TaskComponent(
                     Row(
                         modifier = Modifier
                             .clip(RoundedCornerShape(14.dp))
-                            .background(taskColor),
+                            .background(taskColor)
+                            .width(250.dp),
                         verticalAlignment = Alignment.CenterVertically
+
                     ) {
 
                         Checkbox(
