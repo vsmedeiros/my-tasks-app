@@ -90,14 +90,15 @@ fun ListContent(
         topBar = {
             Column(modifier = Modifier.padding(24.dp, 36.dp)) {
                 Text(
-                    text = "Olá!",
-                    fontSize = 36.sp,
+                    text = "MyTask!",
+                    fontSize = 35.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     text =
                     if (pendingTasks.isNotEmpty()) {
-                        "${pendingTasks.size} tarefa(s) pendente(s)"
+                        "Clique no '+' para adicionar uma nova tarefa!\n\n" +
+                                "${pendingTasks.size} tarefa(s) pendente(s)"
                     } else {
                         "Toda(s) as tarefa(s) concluída(s)!"
                     },
