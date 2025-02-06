@@ -129,8 +129,8 @@ fun ListContent(
         LazyColumn(
             modifier = Modifier
                 .consumeWindowInsets(paddingValues)
-                .padding(paddingValues), // ✅ Aplicando o padding corretamente
-            contentPadding = PaddingValues(16.dp) // ✅ Correção do erro
+                .padding(paddingValues),
+            contentPadding = PaddingValues(16.dp)
         ) {
             itemsIndexed(todos) { index, todo ->
                 TaskComponent(

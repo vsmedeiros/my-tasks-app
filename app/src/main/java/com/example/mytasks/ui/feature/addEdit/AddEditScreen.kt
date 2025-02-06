@@ -102,12 +102,12 @@ fun AddEditContent(
             SnackbarHost(hostState = snackbarHostState)
         }
 
-    ) { paddingValues ->  // ✅ Corrigido para evitar `consumeWindowInsets(it)`
+    ) { paddingValues ->
         Column(
             modifier = Modifier
-                .fillMaxSize()  // ✅ Garante que a Column ocupe todo o espaço disponível
-                .padding(paddingValues)  // ✅ Aplica o padding corretamente
-                .padding(16.dp) // Padding extra para afastar do topo
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
         ) {
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -118,7 +118,7 @@ fun AddEditContent(
                     )
 
                 },
-                label = { Text("Título") }, // ✅ Mantém o texto visível mesmo ao digitar
+                label = { Text("Título") },
                 placeholder = { Text("Digite o título") }
             )
 
